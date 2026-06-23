@@ -1,16 +1,88 @@
-# React + Vite
+# SAGE Healthcare — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 18 + Vite 5 single-page application for the SAGE Healthcare Platform.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Category | Library |
+|---|---|
+| Framework | React 18 |
+| Build tool | Vite 5 |
+| Styling | Tailwind CSS 4 |
+| Routing | React Router v6 |
+| Data fetching | TanStack Query v5 |
+| HTTP client | Axios |
+| Charts | Recharts |
+| Animations | Framer Motion |
+| Maps | Leaflet + React Leaflet |
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js >= 18
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Install dependencies
+npm install
+
+# Start dev server (proxies API calls to localhost:5000)
+npm run dev
+
+# Production build
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint
+npm run lint
+```
+
+> **Note:** The dev server proxies `/api` requests to the backend at `http://localhost:5000`.
+> Make sure the backend is running before using auth or any data features.
+
+## Project Structure
+
+```
+src/
+├── api/            # Axios instance, token store, session refresh
+├── components/     # Shared UI components
+├── constants/      # Static data (specialties, etc.)
+├── context/        # Auth context (AuthContext)
+├── hooks/          # Custom React hooks
+├── lib/            # TanStack Query client config
+├── Pages/
+│   ├── auth/       # Login, Register, RoleSelection, ForgotPassword, VerifyEmail
+│   ├── Patient/    # Dashboard, Profile, BookDoctor, DoctorSearch, Appointments, AI Chat
+│   ├── Doctor/     # Dashboard, Profile, ScheduleManager, TodayQueue, FollowUps, Analytics
+│   └── Admin/      # AdminDashboard + sections (Analytics, Monitoring, Users, Doctors…)
+├── Services/       # API service layer (authService, patientService, adminService)
+└── utils/          # Date/time formatting, password validation, notification helpers
+```
+
+## Roles & Key Pages
+
+### Patient
+- Dashboard with nearby doctors and live queue status
+- Doctor search and booking
+- Appointments management
+- AI chat (SAGE AI — powered by Groq / LLaMA 3.3)
+
+### Doctor
+- Today's queue with shift controls
+- Schedule manager (slots, walk-ins, follow-ups)
+- Analytics dashboard (bookings, ratings, revenue)
+- Profile management and clinic location picker
+
+### Admin
+- Platform overview and user management
+- Doctor verification queue
+- Analytics (9 sub-tabs: Growth, Economics, Efficiency, Demographics, Demand Gaps, Activity Heatmap, Doctor Health, AI Usage, Secretary Activity)
+- System health + ops center (real-time SSE updates)
+- Audit logs and error logs
+
+## Environment
+
+The app reads no `.env` variables directly — all config is handled by the Vite proxy and the backend.
+Copy `../.env.example` at the repo root and fill in the backend variables to get the full stack running.

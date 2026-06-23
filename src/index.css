@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* ── Material Symbols safety net ───────────────────────────────────────────
+   Guarantees the icon font-family and ligature settings are applied locally,
+   so an icon never falls back to showing its raw text (e.g. "smart_toy") if
+   Google's stylesheet loads late or out of order. The @font-face itself still
+   comes from the Google Fonts <link> in index.html. */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Global scrollbar — thin, emerald-tinted, consistent across the app ───── */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(4, 120, 87, 0.35) transparent;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(4, 120, 87, 0.35);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(4, 120, 87, 0.6); }
+
+/* ── Number inputs — hide the native spinner arrows ────────────────────────
+   Browsers draw their own up/down arrows on <input type="number">. They render
+   as a jarring white control that can't be recolored to match our theme, so we
+   remove them app-wide. Users can still type the value (and use ↑/↓ keys). */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* ── Skeleton shimmer ──────────────────────────────────────────────────────── */
+@keyframes shimmer {
+    0%   { background-position:  200% 0; }
+    100% { background-position: -200% 0; }
+}
+.shimmer {
+    background:      linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+    background-size: 200% 100%;
+    animation:       shimmer 1.5s infinite linear;
+}
+
+@layer components {
+    .input-field {
+        @apply w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-400 transition;
+    }
+    .btn-primary {
+        @apply px-4 py-2.5 bg-[#134e3a] text-white text-sm font-bold rounded-xl hover:bg-[#0d3829] transition disabled:opacity-50;
+    }
+    .btn-secondary {
+        @apply px-4 py-2.5 border border-gray-200 text-gray-600 text-sm font-bold rounded-xl hover:bg-gray-50 transition;
+    }
+}
